@@ -1,0 +1,140 @@
+<div class="row">
+    <div class="col-sm- d-flex align-items-center justify-content-between">
+        <h3 class="text-center">Tasks</h3>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTaskModal">Add Task</button>
+    </div>
+</div>
+<hr>
+
+<% if (typeof success !== 'undefined' && success) { %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <%= success %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>
+
+<% if (typeof error !== 'undefined' && error) { %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <%= error %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>
+
+<div class="row">
+    <% tasks.forEach(element => { %>
+     
+        <div class="col-md-4">
+            <div class="card overflow-hidden">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <span class="badge <%= element.status === 'pending' ? 'bg-warning' : element.status === 'in_progress' ? 'bg-primary' : 'bg-success' %> rounded-pill"><h5 class="mb-0 text-white"><%= element.status ? element.status.replace('_', ' ') : '' %></h5></span>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="ti ti-dots-vertical"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <form action="/dashboard/tasks/update/<%= element.id %>" method="POST">
+                                <input type="hidden" name="status" value="In_progress">
+                                <button type="submit" class="dropdown-item">In progress</button>
+                            </form>
+                            <form action="/dashboard/tasks/update/<%= element.id %>" method="POST">
+                                <input type="hidden" name="status" value="Completed">
+                                <button type="submit" class="dropdown-item">Completed</button>
+                            </form>
+                            <form action="/dashboard/tasks/delete/<%= element.id %>" method="POST">
+                                <button type="submit" class="dropdown-item">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body overflow-hidden text-truncate" style=" max-width: 100%;">
+                    <h4 class="mb-4"><%= element.title %></h4>
+                    
+                    <div class="overflow-hidden text-truncate" style=" max-width: 100%;">
+                    <p><%= element.description %></p>
+                    </div>
+                    <button class="btn btn-sm btn-primary detail-btn" 
+                    data-title="<%= element.title %>"
+                    data-description="<%= element.description %>"
+                    data-status="<%= element.status %>" 
+                   >View</button>
+                </div>
+            </div>  
+        </div>
+    <% }) %>
+</div>
+
+<div class="modal" id="addTaskModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Task</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="/dashboard/tasks/add" method="POST">
+      <div class="modal-body">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+            </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary">Add</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="detailModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+     
+      <div class="modal-body overflow-y" >
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <h5 class="mb-4">Description</h5>
+                    <p id="detailDescription" class="text-break"></p>
+                    <h5 class="mb-4">Status</h5>
+                    <p id="detailStatus"></p>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+    document.querySelectorAll('.detail-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            showDetailModal(
+                btn.dataset.title,
+                btn.dataset.description,
+                btn.dataset.status
+            );
+        });
+    });
+    function showDetailModal(title, description, status) {
+        document.querySelector('#detailModal .modal-title').textContent = title;
+        document.getElementById('detailDescription').textContent = description;
+        document.getElementById('detailStatus').textContent = status.replace('_', ' ');
+        new bootstrap.Modal(document.getElementById('detailModal')).show();
+    }
+</script>

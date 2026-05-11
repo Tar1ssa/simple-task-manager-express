@@ -1,0 +1,58 @@
+<!-- Required Js -->
+  <script src="/assets/dist/assets/js/plugins/popper.min.js"></script>
+  <script src="/assets/dist/assets/js/plugins/simplebar.min.js"></script>
+  <script src="/assets/dist/assets/js/plugins/bootstrap.min.js"></script>
+  <script src="/assets/dist/assets/js/fonts/custom-font.js"></script>
+  <script src="/assets/dist/assets/js/pcoded.js"></script>
+  <script src="/assets/dist/assets/js/plugins/feather.min.js"></script>
+
+  
+  
+  
+  
+  <script>layout_change('light');</script>
+  
+  
+  
+  
+  <script>change_box_container('false');</script>
+  
+  
+  
+  <script>layout_rtl_change('false');</script>
+  
+  
+  <script>preset_change("preset-1");</script>
+  
+  
+  <script>font_change("Public-Sans");</script>
+  
+  <script>
+    // Forgot password form handling
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const message = urlParams.get('message');
+      
+      if (message === 'reset_token_generated') {
+        document.getElementById('emailForm').style.display = 'none';
+        document.getElementById('tokenForm').style.display = 'block';
+      }
+    });
+  </script>
+ 
+  <script>
+    const navType = performance.getEntriesByType("navigation")[0].type;
+
+    if (navType === 'reload') {
+        window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname
+        );
+    }
+</script>
+
+</body>
+<!-- [Body] end -->
+
+</html>

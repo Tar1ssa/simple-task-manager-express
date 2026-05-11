@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-sm-">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="mb-4">Dashboard</h5> 
+                <p>Welcome <%= user ? user.name : '' %> !</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-3">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="mb-3 d-flex align-items-center gap-3"><span class="badge bg-light-warning border border-warning"><%= tasksCount %></span> Tasks </h2>
+                <h6 class="mb-2 f-w-400 text-muted">Total</h6>
+            </div>
+        </div>
+    </div>
+     <div class="col-sm-3">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="mb-3 d-flex align-items-center gap-3"><span class="badge bg-light-danger border border-danger"><%= tasksPendingCount %></span> Tasks </h2>
+                <h6 class="mb-2 f-w-400 text-muted">Pending</h6>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="mb-3 d-flex align-items-center gap-3"><span class="badge bg-light-primary border border-primary"><%= tasksInProgressCount %></span> Tasks </h2>
+                <h6 class="mb-2 f-w-400 text-muted">In Progress</h6>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="mb-3 d-flex align-items-center gap-3"><span class="badge bg-light-success border border-success"><%= tasksCompletedCount %></span> Tasks </h2>
+                <h6 class="mb-2 f-w-400 text-muted">Completed</h6>
+            </div>
+        </div>
+    </div>
+   
+</div>
